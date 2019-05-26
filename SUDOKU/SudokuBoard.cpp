@@ -6,10 +6,21 @@ SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 	winWidth = windowWidth;
 	winHeight = windowHeight;
 	gameMode = gamemode;
+	gameState = RUNNING;
+	fillingMode = NORMAL;
+	//easy - 38/81
+	//medium -30/81
+	//hard - 28/81
+	//expert - 23/81
+
+
+
+
 }
 
 void SudokuBoard::setNumbers()
 {
+	
 }
 
 int SudokuBoard::getWindowHeight() const
@@ -34,12 +45,23 @@ int SudokuBoard::getBoardWidth() const
 
 char SudokuBoard::fillTheField(int number)
 {
-	return 0;
+	if (number < 1 || number > 9)
+	{
+		return;
+	}
+	if (number >= 1 && number <= 9)
+	{
+		return '0' + number;
+	}
 }
 
 bool SudokuBoard::isCorrectFieldFilling() const
 {
 	return false;
+}
+
+void SudokuBoard::changeFillingMode(FillingMode mode)
+{
 }
 
 int SudokuBoard::getMistakesAmount() const
@@ -54,5 +76,4 @@ GameState SudokuBoard::getGameState() const
 
 char SudokuBoard::getFieldInfo() const
 {
-	return 0;
 }

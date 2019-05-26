@@ -7,7 +7,13 @@ enum FillingMode {NORMAL, NOTEMODE};
 
 struct Field
 {
-	int smallTab[3][3];
+	bool hasNumber;
+	int number;
+};
+
+struct LargeTab
+{
+	Field smallTab[3][3];
 };
 
 class SudokuBoard
@@ -16,7 +22,7 @@ class SudokuBoard
 	int winWidth;
 	int height;
 	int width;
-	Field largeTab[3][3];
+	LargeTab largeTab[3][3];
 	void setNumbers();
 	GameMode gameMode;
 	GameState gameState;
@@ -29,6 +35,7 @@ public:
 	int getBoardWidth() const;
 	char fillTheField(int number);
 	bool isCorrectFieldFilling() const;
+	void changeFillingMode(FillingMode mode);
 	int getMistakesAmount() const;
 	GameState getGameState() const;
 	char getFieldInfo() const;	

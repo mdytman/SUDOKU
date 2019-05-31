@@ -7,13 +7,14 @@ enum FillingMode {NORMAL, NOTEMODE};
 
 struct Field
 {
-	bool hasNumber;
+	bool isFilled;
 	int number;
 };
 
-struct LargeTab
+struct tempField
 {
-	Field smallTab[3][3];
+	int x;
+	int y;
 };
 
 class SudokuBoard
@@ -22,22 +23,27 @@ class SudokuBoard
 	int winWidth;
 	int height;
 	int width;
-	LargeTab largeTab[3][3];
-	void setNumbers();
+	Field board[9][9];
 	GameMode gameMode;
 	GameState gameState;
 	FillingMode fillingMode;
+	
+	void setNumbers();
 public:
 	SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode);
+	void debug_display() const;
 	int getWindowHeight() const;
 	int getWindowWidth() const;
 	int getBoardHeight() const;
 	int getBoardWidth() const;
+	bool checkColumn(int x, int y) const;
+	bool checkRow(int x, int y) const;
+	bool checkSmallTab(int x, int y) const;
 	char fillTheField(int number);
 	bool isCorrectFieldFilling() const;
 	void changeFillingMode(FillingMode mode);
 	int getMistakesAmount() const;
 	GameState getGameState() const;
-	char getFieldInfo() const;	
+	char getFieldInfo(int x, int y) const;
 };
 

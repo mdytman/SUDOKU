@@ -29,6 +29,7 @@ class SudokuBoard
 	FillingMode fillingMode;
 	
 	void setNumbers();
+	int findInARow(int tmp, int row);
 public:
 	SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode);
 	void debug_display() const;

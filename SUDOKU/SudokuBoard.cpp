@@ -2,6 +2,8 @@
 #include "SudokuBoard.h"
 #include <vector>
 #include <iostream>
+#include <set>
+#include <algorithm>
 
 SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 {
@@ -15,8 +17,6 @@ SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 	//hard - 28/81
 	//expert - 23/81
 	
-	setNumbers();
-	
 	for (int i1 = 0; i1 < 9; ++i1)
 	{
 		for (int i2 = 0; i2 < 9; ++i2)
@@ -29,9 +29,37 @@ SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 	{
 		for (int i4 = 0; i4 < 0; ++i4)
 		{
-			board[i3][i4].number == 0;
+			board[i3][i4].number = 0;
 		}
 	}
+	
+	//filling one row and one column randomly
+	int tmpRow = rand() % 9 + 1;
+	
+	std::vector<int> numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	std::random_shuffle(numbers.begin(), numbers.end());
+	for (int i5 = 0; i5 < 9; ++i5)
+	{
+		board[tmpRow][i5].number = numbers[i5];
+	}
+
+	int tmpNumber = rand() % 9 + 1;
+	int tmpColumn = findInARow(tmpNumber, tmpRow);
+	numbers.erase(numbers.begin() + tmpColumn);
+	std::random_shuffle(numbers.begin(), numbers.end());
+	//generate column without this number
+	int i7 = 0;
+	for (size_t i6 = 0; i6 < numbers.size(); ++i6)
+	{
+		if (i7 == tmpRow)
+		{
+			++i7;
+		}
+		board[i7][tmpColumn].number = numbers[i6];
+		++i7;
+	}
+
+	//setNumbers();
 }
 
 void SudokuBoard::debug_display() const
@@ -50,8 +78,6 @@ void SudokuBoard::debug_display() const
 
 void SudokuBoard::setNumbers()
 {	
-
-	
 	int x;	
 	for (int i1 = 0; i1 < 9; ++i1)
 	{
@@ -63,6 +89,15 @@ void SudokuBoard::setNumbers()
 				board[i1][i2].number = x;
 			} while (checkColumn(i2, i1) == true || checkRow(i2, i1) == true || checkSmallTab(i2, i1) == true);
 		}
+	}
+}
+
+int SudokuBoard::findInARow(int tmp, int row)
+{
+	for (int i = 0; i < 9; ++i)
+	{
+		if (board[row][i].number == tmp)
+			return i;
 	}
 }
 

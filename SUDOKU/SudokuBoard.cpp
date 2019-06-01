@@ -27,7 +27,7 @@ SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 	}
 	for (int i3 = 0; i3 < 9; ++i3)
 	{
-		for (int i4 = 0; i4 < 0; ++i4)
+		for (int i4 = 0; i4 < 9; ++i4)
 		{
 			board[i3][i4].number = 0;
 		}
@@ -59,7 +59,7 @@ SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 		++i7;
 	}
 
-	//setNumbers();
+	setNumbers();
 }
 
 void SudokuBoard::debug_display() const
@@ -83,11 +83,15 @@ void SudokuBoard::setNumbers()
 	{
 		for (int i2 = 0; i2 < 9; ++i2)
 		{
-			do
+			if (board[i1][i2].number == 0)
 			{
-				x = rand() % 9 + 1;
-				board[i1][i2].number = x;
-			} while (checkColumn(i2, i1) == true || checkRow(i2, i1) == true || checkSmallTab(i2, i1) == true);
+				do
+				{
+					x = rand() % 9 + 1;
+					board[i1][i2].number = x;
+				} while (checkColumn(i2, i1) == true || checkRow(i2, i1) == true || checkSmallTab(i2, i1) == true);
+			}
+			
 		}
 	}
 }

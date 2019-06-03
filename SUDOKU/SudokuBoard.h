@@ -33,6 +33,7 @@ class SudokuBoard
 	void fillDiagonalTables(int y, int x);
 	void fillOtherTables(int y, int x);
 	void fillALine(int y, int x);
+	bool checkAll(int y, int x, int n);
 public:
 	SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode);
 	void debug_display() const;

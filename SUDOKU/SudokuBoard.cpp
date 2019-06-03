@@ -32,33 +32,6 @@ SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 			board[i3][i4].number = 0;
 		}
 	}
-	
-	////filling one row and one column randomly
-	//int tmpRow = rand() % 9 + 1;
-	//
-	//std::vector<int> numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-	//std::random_shuffle(numbers.begin(), numbers.end());
-	//for (int i5 = 0; i5 < 9; ++i5)
-	//{
-	//	board[tmpRow][i5].number = numbers[i5];
-	//}
-
-	//int tmpNumber = rand() % 9 + 1;
-	//int tmpColumn = findInARow(tmpNumber, tmpRow);
-	////auto tmpColumn = std::find(numbers.begin(), numbers.end(), tmpNumber);
-	//numbers.erase(numbers.begin() + tmpColumn);
-	//std::random_shuffle(numbers.begin(), numbers.end());
-	////generate column without this number
-	//int i7 = 0;
-	//for (size_t i6 = 0; i6 < numbers.size(); ++i6)
-	//{
-	//	if (i7 == tmpRow)
-	//	{
-	//		++i7;
-	//	}
-	//	board[i7][tmpColumn].number = numbers[i6];
-	//	++i7;
-	//}
 
 	fillDiagonalTables(0, 0);
 	fillDiagonalTables(3, 3);
@@ -85,32 +58,7 @@ void SudokuBoard::debug_display() const
 
 
 void SudokuBoard::setNumbers()
-{	
-	int x;	
-	//int tmp;
-	for (int i1 = 0; i1 < 9; ++i1)
-	{
-		for (int i2 = 0; i2 < 9; ++i2)
-		{
-			//tmp = board[i1][i2].number;
-			if (board[i1][i2].number == 0)
-			{
-				do
-				{
-					x = rand() % 9 + 1;
-					if (checkColumn(i2, i1, x) == false && checkRow(i2, i1, x) == false)
-					{						
-							board[i1][i2].number = x;
-					}
-				} while (board[i1][i2].number == 0);
-
-				//(checkColumn(i2, i1, x) == true || checkRow(i2, i1, x) == true); // || checkSmallTab(i2, i1, x) == true);
-				
-			}
-			else board[i1][i2].number = -1; //= tmp;
-			
-		}
-	}
+{
 }
 
 int SudokuBoard::findInARow(int tmp, int row)
@@ -139,31 +87,67 @@ void SudokuBoard::fillDiagonalTables(int y, int x)
 
 void SudokuBoard::fillOtherTables(int y, int x)
 {
-	fillALine(y, x);
+	/*fillALine(y, x);
 	fillALine(y, x + 1);
-	fillALine(y, x + 2);
+	fillALine(y, x + 2);*/
+	std::vector<int> numbers{ 1,2,3,4,5,6,7,8,9 };
+	int idx = 1;
+	std::random_shuffle(numbers.begin(), numbers.end());
+	int tmp = 0;
+	int tmpValue = 10;
+	int tmpSwap = 0; 
+	while (checkAll(y, x, numbers[idx - 1]) || checkAll(y, x + 1, numbers[idx]) || checkAll(y, x + 2, numbers[idx + 1]) || checkAll(y + 1, x, numbers[idx + 2]) || checkAll(y + 1, x + 1, numbers[idx + 3]) || checkAll(y + 1, x + 2, numbers[idx + 4]) || checkAll(y + 2, x, numbers[idx + 5]) || checkAll(y + 2, x + 1, numbers[idx + 6]) || checkAll(y + 2, x + 2, numbers[idx + 7]))
+	{
+		std::rotate(numbers.begin(), numbers.begin() + 1, numbers.end());
+		tmp = tmp + 1;
+		if (tmp == tmpValue)
+		{
+			std::random_shuffle(numbers.begin(), numbers.end());
+			tmpValue = tmpValue * 2;
+		}
+	}
+	idx = 1;
+	for (int i3 = 0 + y; i3 < 3 + y; ++i3)
+	{
+		for (int i4 = 0 + x; i4 < 3 + x; ++i4)
+		{
+			board[i3][i4].number = numbers[idx - 1];
+			idx = idx + 1;
+		}
+	}
 }
 
 void SudokuBoard::fillALine(int y, int x)
 {
-	std::vector<int> numbers{ 1,2,3,4,5,6,7,8,9 };
-	//removing repeated elements in a row
-	for (int i1 = 0; i1 < 9; ++i1)
+	//std::vector<int> numbers{ 1,2,3,4,5,6,7,8,9 };
+	////removing repeated elements in a row
+	//for (int i1 = 0; i1 < 9; ++i1)
+	//{
+	//	if (board[i1][x].number != 0)
+	//		std::remove(numbers.begin(), numbers.end(), board[i1][x].number);
+	//}
+	//std::random_shuffle(numbers.begin(), numbers.end()); //need to fix this
+	//int idx = 1;
+	//for (int i2 = 0 + y; i2 < 3 + y; ++i2)
+	//{
+	//	while (checkcolumn(x, i2, numbers[idx - 1]))
+	//	{
+	//		std::random_shuffle(numbers.begin(), numbers.end());
+	//	}
+	//	board[i2][x].number = numbers[idx - 1];
+	//	idx = idx + 1;
+	//}
+
+
+}
+
+bool SudokuBoard::checkAll(int y, int x, int n)
+{
+	if (checkColumn(x, y, n) || checkRow(x, y, n))
 	{
-		if (board[i1][x].number != 0)
-			std::remove(numbers.begin(), numbers.end(), board[i1][x].number);
+		return true;
 	}
-	std::random_shuffle(numbers.begin(), numbers.end()); //need to fix this
-	int idx = 1;
-	for (int i2 = 0 + y; i2 < 3 + y; ++i2)
-	{
-		while (checkColumn(x, i2, numbers[idx - 1]))
-		{
-			std::random_shuffle(numbers.begin(), numbers.end());
-		}
-		board[i2][x].number = numbers[idx - 1];
-		idx = idx + 1;
-	}
+	else return false;
 }
 
 

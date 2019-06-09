@@ -28,20 +28,22 @@ class SudokuBoard
 	GameState gameState;
 	FillingMode fillingMode;
 	
-	void setNumbers();
+
 	int findInARow(int tmp, int row);
 	void fillDiagonalTables(int y, int x);
 	void fillOtherTables(int y, int x);
 	void fillALine(int y, int x);
 	bool checkAll(int y, int x, int n);
+	bool isEmpty(int &y, int &x) const;
 public:
 	SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode);
+	bool setNumbers();
 	void debug_display() const;
 	int getWindowHeight() const;
 	int getWindowWidth() const;
 	int getBoardHeight() const;
 	int getBoardWidth() const;
-	bool checkColumn(int x, int y, int n) const;
+	bool checkColumn(int x, int y, int n) const; //true if there is a number in column
 	bool checkRow(int x, int y, int n) const;
 	bool checkSmallTab(int x, int y, int n) const;
 	char fillTheField(int number);

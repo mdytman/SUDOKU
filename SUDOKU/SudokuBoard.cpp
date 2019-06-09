@@ -36,9 +36,9 @@ SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 	fillDiagonalTables(0, 0);
 	fillDiagonalTables(3, 3);
 	fillDiagonalTables(6, 6);
-	fillOtherTables(0, 3);
+	//fillOtherTables(0, 3);
 
-
+	setNumbers();
 
 	//setNumbers();
 }
@@ -55,10 +55,39 @@ void SudokuBoard::debug_display() const
 	}
 }
 
-
-
-void SudokuBoard::setNumbers()
+bool SudokuBoard::setNumbers()
 {
+	int y, x;
+
+	// If there is no unassigned location, 
+	// we are done  
+	if (!isEmpty(y, x))
+	{
+		std::cout << "iseampty";
+		return true; // success!  
+	}
+		// consider digits 1 to 9  
+	for (int n = 1; n <= 9; n++) // efnjdjfsejidelksfdkljedmfek
+	{
+		std::cout << "checkAll" << std::endl;
+
+		// if looks promising  
+		if (!checkAll(y, x, n))
+		{
+			std::cout << "checkAll";
+
+			// make tentative assignment  
+			board[y][x].number = n;
+
+			// return, if success, yay!  
+			if (setNumbers())
+				return true;
+
+			// failure, unmake & try again  
+			board[y][x].number = 0;
+		}
+	}
+	return false; // this triggers backtracking 
 }
 
 int SudokuBoard::findInARow(int tmp, int row)
@@ -143,11 +172,29 @@ void SudokuBoard::fillALine(int y, int x)
 
 bool SudokuBoard::checkAll(int y, int x, int n)
 {
-	if (checkColumn(x, y, n) || checkRow(x, y, n))
+	//return !UsedInRow(grid, row, num) &&
+	//	!UsedInCol(grid, col, num) &&
+	//	!UsedInBox(grid, row - row % 3,
+	//		col - col % 3, num) &&
+	//	grid[row][col] == UNASSIGNED;
+	if (!checkColumn(x, y, n) && !checkRow(x, y, n) && !checkSmallTab(x % 3, y % 3, n))
 	{
-		return true;
+		return false;
 	}
-	else return false;
+	else return true;
+}
+
+bool SudokuBoard::isEmpty(int &y, int &x) const
+{
+	for (y = 0; y < 9; y++)
+	{
+		for (x = 0; x < 9; x++)
+		{
+			if (board[y][x].number == 0)
+				return true;
+		}
+	}		
+	return false;
 }
 
 
@@ -175,11 +222,11 @@ bool SudokuBoard::checkColumn(int x, int y, int n) const
 {
 	for (int i = 0; i < 9; ++i)
 	{
-		if (i != x)
-		{
+		/*if (i != x)
+		{*/
 			if (board[y][i].number == n)
 				return true;
-		}
+		//}
 	}
 	return false;
 }
@@ -188,37 +235,22 @@ bool SudokuBoard::checkRow(int x, int y, int n) const
 {
 	for (int i = 0; i < 9; ++i)
 	{
-		if (i != y)
-		{
+		//if (i != y)
+		//{
 			if (board[i][x].number == n)
 				return true;
-		}
+		//}
 	}
 	return false;
 }
 
-bool SudokuBoard::checkSmallTab(int x, int y, int n) const
+bool SudokuBoard::checkSmallTab(int x, int y, int n) const //x and y must be the coordinates of the top left corner of small tab
 {
-	int rx; //r - remainder
-	rx = x % 3;
-	int ry;
-	ry = y % 3;
-
-	int tmpx = x - rx; //thats an idea for checking which small tab x and y belong to
-	int tmpy = y - ry;
-	
-	for (int i = tmpy; i < tmpy + 3; ++i)
-	{
-		for (int j = tmpx; j < tmpx + 3; ++j)
-		{
-			if (i != y && j != x)
-			{
-				if (board[i][j].number == n)
-					return true;
-			}
-		}
-	}
-	return false;
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+			if (board[i + y][j + x].number == n)
+				return true;
+	return false; //i j
 }
 
 char SudokuBoard::fillTheField(int number)

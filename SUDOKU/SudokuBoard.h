@@ -31,13 +31,11 @@ class SudokuBoard
 
 	int findInARow(int tmp, int row);
 	void fillDiagonalTables(int y, int x);
-	void fillOtherTables(int y, int x);
-	void fillALine(int y, int x);
 	bool checkAll(int y, int x, int n);
 	bool isEmpty(int &y, int &x) const;
+	bool setNumbers();
 public:
 	SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode);
-	bool setNumbers();
 	void debug_display() const;
 	int getWindowHeight() const;
 	int getWindowWidth() const;
@@ -47,7 +45,7 @@ public:
 	bool checkRow(int x, int y, int n) const;
 	bool checkSmallTab(int x, int y, int n) const;
 	char fillTheField(int number);
-	bool isCorrectFieldFilling() const;
+	bool isCorrectMove() const;
 	void changeFillingMode(FillingMode mode);
 	int getMistakesAmount() const;
 	GameState getGameState() const;

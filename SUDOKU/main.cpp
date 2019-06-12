@@ -11,7 +11,6 @@ int main()
 {
 	srand(time(NULL));
 	SudokuBoard sb(900, 900, HARD);
-	//sb.setNumbers();
 	sb.debug_display();
 
 	IntroView iv(sb);

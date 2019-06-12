@@ -23,16 +23,18 @@ class SudokuBoard
 	int winWidth;
 	int height;
 	int width;
+	int mistakesAmount;
 	Field board[9][9];
 	GameMode gameMode;
 	GameState gameState;
 	FillingMode fillingMode;
 	
-
-	int findInARow(int tmp, int row);
 	void fillDiagonalTables(int y, int x);
-	bool checkAll(int y, int x, int n);
-	bool isEmpty(int &y, int &x) const;
+	bool checkColumn(int x, int y, int n) const; //true if there is a number in column
+	bool checkRow(int x, int y, int n) const;
+	bool checkSmallTab(int x, int y, int n) const;
+	bool checkAll(int y, int x, int n); //false if number 'n' is not in the column, row and small tab
+	bool isEmpty(int &y, int &x) const; //that method is looking for a field with no number on it
 	bool setNumbers();
 public:
 	SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode);
@@ -41,11 +43,8 @@ public:
 	int getWindowWidth() const;
 	int getBoardHeight() const;
 	int getBoardWidth() const;
-	bool checkColumn(int x, int y, int n) const; //true if there is a number in column
-	bool checkRow(int x, int y, int n) const;
-	bool checkSmallTab(int x, int y, int n) const;
 	char fillTheField(int number);
-	bool isCorrectMove() const;
+	bool isCorrectMove(int y, int x, int n);
 	void changeFillingMode(FillingMode mode);
 	int getMistakesAmount() const;
 	GameState getGameState() const;

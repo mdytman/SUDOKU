@@ -12,6 +12,7 @@ SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 	gameMode = gamemode;
 	gameState = RUNNING;
 	fillingMode = NORMAL;
+	mistakesAmount = 0;
 	//easy - 38/81
 	//medium -30/81
 	//hard - 28/81
@@ -76,14 +77,6 @@ bool SudokuBoard::setNumbers() //inspired by https://www.geeksforgeeks.org/sudok
 	return false; 
 }
 
-int SudokuBoard::findInARow(int tmp, int row)
-{
-	for (int i = 0; i < 9; ++i)
-	{
-		if (board[row][i].number == tmp)
-			return i;
-	}
-}
 
 void SudokuBoard::fillDiagonalTables(int y, int x)
 {
@@ -111,9 +104,9 @@ bool SudokuBoard::checkAll(int y, int x, int n)
 
 bool SudokuBoard::isEmpty(int &y, int &x) const
 {
-	for (y = 0; y < 9; y++)
+	for (y = 0; y < 9; ++y)
 	{
-		for (x = 0; x < 9; x++)
+		for (x = 0; x < 9; ++x)
 		{
 			if (board[y][x].number == 0)
 				return true;
@@ -184,23 +177,52 @@ char SudokuBoard::fillTheField(int number)
 	}
 }
 
-bool SudokuBoard::isCorrectMove() const
+bool SudokuBoard::isCorrectMove(int y, int x, int n)
 {
-	return false;
+	if (board[y][x].number == n)
+	{
+		return true;
+	}
+	else
+	{
+		++mistakesAmount;
+		return false;
+	}
 }
 
 void SudokuBoard::changeFillingMode(FillingMode mode)
 {
+	fillingMode = mode;
 }
 
 int SudokuBoard::getMistakesAmount() const
 {
-	return 0;
+	return mistakesAmount;
 }
 
 GameState SudokuBoard::getGameState() const
 {
-	return gameState;
+	if (mistakesAmount > 2)
+	{
+		return FINISHED_LOSS;
+	}
+	
+	int tmp = 0;
+	for (int i = 0; i < 9; ++i)
+	{
+		for (int j = 0; j < 9; ++j)
+		{
+			if (board[i][j].isFilled)
+			{
+				++tmp;
+			}
+		}
+	}
+	if (mistakesAmount <= 2 && tmp == 81) //it could be problem here
+	{
+		return FINISHED_WIN;
+	}
+	else return RUNNING;
 }
 
 char SudokuBoard::getFieldInfo(int x, int y) const

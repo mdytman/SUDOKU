@@ -7,7 +7,7 @@ enum FillingMode {NORMAL, NOTEMODE};
 
 struct Field
 {
-	bool isFilled;
+	bool isRevealed;
 	int number;
 };
 
@@ -36,6 +36,7 @@ class SudokuBoard
 	bool checkAll(int y, int x, int n); //false if number 'n' is not in the column, row and small tab
 	bool isEmpty(int &y, int &x) const; //that method is looking for a field with no number on it
 	bool setNumbers();
+	void revealFields(int amount);
 public:
 	SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode);
 	void debug_display() const;

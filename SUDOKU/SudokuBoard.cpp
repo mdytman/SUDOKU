@@ -22,7 +22,7 @@ SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 	{
 		for (int i2 = 0; i2 < 9; ++i2)
 		{
-			board[i1][i2].isFilled = true;
+			board[i1][i2].isRevealed = false;
 		}
 		
 	}
@@ -39,6 +39,32 @@ SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 	fillDiagonalTables(6, 6);
 
 	setNumbers();
+
+	switch (gameMode)
+	{
+	case EASY:
+		
+		revealFields(38);
+		break;
+
+	case MEDIUM:
+		
+		revealFields(30);
+		break;
+
+	case HARD:
+		
+		revealFields(28);
+		break;
+
+	case EXPERT:
+		
+		revealFields(23);
+		break;
+
+	default:
+		break;
+	}
 }
 
 void SudokuBoard::debug_display() const
@@ -75,6 +101,20 @@ bool SudokuBoard::setNumbers() //inspired by https://www.geeksforgeeks.org/sudok
 		}
 	}
 	return false; 
+}
+
+void SudokuBoard::revealFields(int amount)
+{
+	int x, y;
+	for (int i = 0; i < amount; ++i)
+	{
+		do
+		{
+			x = rand() % 9;
+			y = rand() % 9;
+		} while (board[y][x].isRevealed);
+		board[y][x].isRevealed = true;
+	}
 }
 
 
@@ -212,7 +252,7 @@ GameState SudokuBoard::getGameState() const
 	{
 		for (int j = 0; j < 9; ++j)
 		{
-			if (board[i][j].isFilled)
+			if (board[i][j].isRevealed)
 			{
 				++tmp;
 			}
@@ -228,12 +268,12 @@ GameState SudokuBoard::getGameState() const
 char SudokuBoard::getFieldInfo(int x, int y) const
 {
 	int tmp;
-	if (board[y][x].isFilled)
+	if (board[y][x].isRevealed)
 	{
 		tmp = board[y][x].number;
 		return '0' + tmp;
 	}
-	if (!board[y][x].isFilled)
+	if (!board[y][x].isRevealed)
 	{
 		return '_';
 	}

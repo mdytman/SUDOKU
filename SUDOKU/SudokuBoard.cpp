@@ -40,7 +40,6 @@ SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 
 	setNumbers();
 
-	//setNumbers();
 }
 
 void SudokuBoard::debug_display() const
@@ -55,39 +54,28 @@ void SudokuBoard::debug_display() const
 	}
 }
 
-bool SudokuBoard::setNumbers()
+bool SudokuBoard::setNumbers() //inspired by https://www.geeksforgeeks.org/sudoku-backtracking-7/
 {
 	int y, x;
 
-	// If there is no unassigned location, 
-	// we are done  
 	if (!isEmpty(y, x))
 	{
-		std::cout << "iseampty";
-		return true; // success!  
+		return true; 
 	}
-		// consider digits 1 to 9  
-	for (int n = 1; n <= 9; n++) // efnjdjfsejidelksfdkljedmfek
-	{
-		std::cout << "checkAll" << std::endl;
-
-		// if looks promising  
+		
+	for (int n = 1; n <= 9; ++n) 
+	{ 
 		if (!checkAll(y, x, n))
 		{
-			std::cout << "checkAll";
-
-			// make tentative assignment  
 			board[y][x].number = n;
 
-			// return, if success, yay!  
 			if (setNumbers())
 				return true;
 
-			// failure, unmake & try again  
 			board[y][x].number = 0;
 		}
 	}
-	return false; // this triggers backtracking 
+	return false; 
 }
 
 int SudokuBoard::findInARow(int tmp, int row)
@@ -172,12 +160,7 @@ void SudokuBoard::fillALine(int y, int x)
 
 bool SudokuBoard::checkAll(int y, int x, int n)
 {
-	//return !UsedInRow(grid, row, num) &&
-	//	!UsedInCol(grid, col, num) &&
-	//	!UsedInBox(grid, row - row % 3,
-	//		col - col % 3, num) &&
-	//	grid[row][col] == UNASSIGNED;
-	if (!checkColumn(x, y, n) && !checkRow(x, y, n) && !checkSmallTab(x % 3, y % 3, n))
+	if (!checkColumn(x, y, n) && !checkRow(x, y, n) && !checkSmallTab(x - x % 3, y - y % 3, n) && board[y][x].number == 0)
 	{
 		return false;
 	}
@@ -220,14 +203,18 @@ int SudokuBoard::getBoardWidth() const
 
 bool SudokuBoard::checkColumn(int x, int y, int n) const
 {
-	for (int i = 0; i < 9; ++i)
-	{
-		/*if (i != x)
-		{*/
-			if (board[y][i].number == n)
-				return true;
-		//}
-	}
+	//for (int i = 0; i < 9; ++i)
+	//{
+	//	/*if (i != x)
+	//	{*/
+	//		if (board[y][i].number == n)
+	//			return true;
+	//	//}
+	//}
+	//return false;
+	for (int i = 0; i < 9; i++)
+		if (board[y][i].number == n)
+			return true;
 	return false;
 }
 

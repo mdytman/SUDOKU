@@ -49,6 +49,42 @@ IntroView::IntroView(SudokuBoard & sudokuBoard) : board(sudokuBoard)
 	gameModeText[2].setPosition(board.getWindowWidth() / 6, board.getWindowHeight() / 2.23 + 2 * x);
 	gameModeText[3].setString("EXPERT");
 	gameModeText[3].setPosition(board.getWindowWidth() / 7, board.getWindowHeight() / 2.23 + 3 * x);
+
+	start.setSize(sf::Vector2f(board.getWindowWidth() / 3, board.getWindowHeight() / 14));
+	start.setFillColor(sf::Color(59, 59, 59));
+	start.setPosition(board.getWindowWidth() / 2, board.getWindowHeight() / 1.5);
+
+	startText.setFont(gameModeFont);
+	startText.setCharacterSize(board.getWindowHeight() / 18);
+	startText.setFillColor(sf::Color::White);
+	startText.setString("START");
+	startText.setPosition(board.getWindowWidth() / 1.75, board.getWindowHeight() / 1.5);
+
+	if (!authorFont.loadFromFile("courier-new.ttf"))
+	{
+		std::cout << "error " << std::endl;
+		system("pause");
+	}
+
+	author.setFont(authorFont);
+	author.setCharacterSize(board.getWindowHeight() / 35);
+	author.setFillColor(sf::Color(135, 37, 37));
+	author.setString("Dytman Marta, 249046");
+	author.setPosition(board.getWindowWidth() / 2, board.getWindowHeight() / 2.8);
+}
+
+void IntroView::gameModeOutline(int num, bool tmp)
+{
+	if (tmp == true)
+	{
+		gameModeRect[num].setOutlineThickness(10);
+		gameModeRect[num].setOutlineColor(sf::Color(129, 17, 17));
+	}
+	if (tmp == false)
+	{
+		gameModeRect[num].setOutlineThickness(10);
+		gameModeRect[num].setOutlineColor(sf::Color(171, 171, 171));
+	}
 }
 
 void IntroView::draw(sf::RenderWindow & win)
@@ -61,9 +97,13 @@ void IntroView::draw(sf::RenderWindow & win)
 	{
 		win.draw(gameModeRect[i]);
 	}
-
 	for (int j = 0; j < 4; ++j)
 	{
 		win.draw(gameModeText[j]);
 	}
+	
+	win.draw(start);
+	win.draw(startText);
+
+	win.draw(author);
 }

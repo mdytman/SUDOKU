@@ -1,12 +1,22 @@
 #include "pch.h"
 #include "IntroController.h"
 
-
-IntroController::IntroController()
+IntroController::IntroController(IntroView & v, SudokuBoard & b) : view(v), board(b)
 {
 }
 
-
-IntroController::~IntroController()
+void IntroController::handleEvent(sf::Event & event)
 {
+	if (event.type == sf::Event::MouseButtonPressed)
+	{
+		if (event.mouseButton.button == sf::Mouse::Left)
+		{
+
+		}
+	}
+}
+
+GameMode IntroController::getGMode() const
+{
+	return gMode;
 }

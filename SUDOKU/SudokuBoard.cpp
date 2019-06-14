@@ -267,7 +267,7 @@ GameState SudokuBoard::getGameState() const
 	{
 		return FINISHED_WIN;
 	}
-	else return RUNNING;
+	else return gameState;
 }
 
 char SudokuBoard::getFieldInfo(int x, int y) const

@@ -6,6 +6,7 @@
 #include "SudokuBoard.h"
 #include "IntroView.h"
 #include "IntroController.h"
+#include "ScoreView.h"
 
 
 int main()
@@ -16,6 +17,8 @@ int main()
 
 	IntroView iv(sb);
 	IntroController ic(iv, sb);
+
+	ScoreView sv(sb);
 
 	unsigned int width;
 	unsigned int height;
@@ -35,14 +38,16 @@ int main()
 
 			if (event.type == sf::Event::Closed)
 				w.close();
-			ic.handleEvent(event);
+			//ic.handleEvent(event);
 			//gm.handleEvent(event);
 		}
 
 
 		w.clear();
-		iv.draw(w);
+		//iv.draw(w);
+		sv.draw(w);
 		//gm.draw(w);
+		
 
 		w.display();
 	}

@@ -39,6 +39,7 @@ class SudokuBoard
 	void revealFields(int amount);
 public:
 	SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode);
+	void resetBoard(int wWidth, int wHeight, GameMode gm);
 	void debug_display() const;
 	int getWindowHeight() const;
 	int getWindowWidth() const;

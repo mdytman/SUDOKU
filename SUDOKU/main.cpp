@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "SudokuBoard.h"
 #include "IntroView.h"
+#include "IntroController.h"
 
 
 int main()
@@ -14,6 +15,7 @@ int main()
 	sb.debug_display();
 
 	IntroView iv(sb);
+	IntroController ic(iv, sb);
 
 	unsigned int width;
 	unsigned int height;
@@ -33,6 +35,7 @@ int main()
 
 			if (event.type == sf::Event::Closed)
 				w.close();
+			ic.handleEvent(event);
 			//gm.handleEvent(event);
 		}
 

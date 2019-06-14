@@ -7,9 +7,14 @@
 
 SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 {
-	winWidth = windowWidth;
-	winHeight = windowHeight;
-	gameMode = gamemode;
+	resetBoard(windowWidth, windowHeight, gamemode);
+}
+
+void SudokuBoard::resetBoard(int wWidth, int wHeight, GameMode gm)
+{
+	winWidth = wWidth;
+	winHeight = wHeight;
+	gameMode = gm;
 	gameState = RUNNING;
 	fillingMode = NORMAL;
 	mistakesAmount = 0;
@@ -17,14 +22,14 @@ SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 	//medium -30/81
 	//hard - 28/81
 	//expert - 23/81
-	
+
 	for (int i1 = 0; i1 < 9; ++i1)
 	{
 		for (int i2 = 0; i2 < 9; ++i2)
 		{
 			board[i1][i2].isRevealed = false;
 		}
-		
+
 	}
 	for (int i3 = 0; i3 < 9; ++i3)
 	{
@@ -43,22 +48,22 @@ SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
 	switch (gameMode)
 	{
 	case EASY:
-		
+
 		revealFields(38);
 		break;
 
 	case MEDIUM:
-		
+
 		revealFields(30);
 		break;
 
 	case HARD:
-		
+
 		revealFields(28);
 		break;
 
 	case EXPERT:
-		
+
 		revealFields(23);
 		break;
 

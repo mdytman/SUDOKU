@@ -8,10 +8,11 @@ class BoardView
 	SudokuBoard board;
 	sf::RectangleShape background;
 	sf::RectangleShape field;
-	sf::RectangleShape verticalLines[10];
-	sf::RectangleShape horizontalLines[10];
+	sf::RectangleShape verticalLines[20];
+	sf::RectangleShape horizontalLines[12];
 	sf::Text numbers;
 	sf::Text newNumbers;
+	sf::Text numbersToChoose;
 	sf::Text mistakesAmount;
 	sf::Font numFont;
 	sf::Font mistakesFont;

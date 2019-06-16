@@ -23,6 +23,11 @@ BoardView::BoardView(SudokuBoard & b) : board(b)
 			verticalLines[i].setSize(sf::Vector2f(board.getWindowWidth() / 200, 9 * board.getWindowHeight() / 12));
 		}
 	}
+	for (int k = 0; k < 10; ++k)
+	{
+		verticalLines[k + 10].setSize(sf::Vector2f(board.getWindowWidth() / 200, board.getWindowHeight() / 12));
+		verticalLines[k + 10].setPosition(board.getWindowWidth() / 8 + k * board.getWindowWidth() / 12, board.getWindowHeight() / 10);
+	}	
 
 	for (int j = 0; j < 10; ++j)
 	{
@@ -36,6 +41,11 @@ BoardView::BoardView(SudokuBoard & b) : board(b)
 		{
 			horizontalLines[j].setSize(sf::Vector2f(9 * board.getWindowWidth() / 12 + board.getWindowWidth() / 100, board.getWindowHeight() / 200));
 		}
+	}
+	for (int m = 0; m < 2; ++m)
+	{
+		horizontalLines[m + 10].setSize(sf::Vector2f(9 * board.getWindowWidth() / 12 + board.getWindowWidth() / 100 - board.getWindowWidth() / 200, board.getWindowHeight() / 200));
+		horizontalLines[m + 10].setPosition(board.getWindowWidth() / 8, board.getWindowHeight() / 10 + m * board.getWindowHeight() / 12);
 	}
 	
 	if (!numFont.loadFromFile("numbers.ttf"))
@@ -57,10 +67,13 @@ BoardView::BoardView(SudokuBoard & b) : board(b)
 	mistakesAmount.setCharacterSize(30);
 	mistakesAmount.setStyle(sf::Text::Regular);
 	mistakesAmount.setFillColor(sf::Color::Black);
-	mistakesAmount.setPosition(board.getWindowWidth() / 3, board.getWindowHeight() / 18);
+	mistakesAmount.setPosition(board.getWindowWidth() / 3, board.getWindowHeight() / 20);
 	mistakesAmount.setString("Mistakes amount: " + std::to_string(board.getMistakesAmount()) + "/3");
 
-
+	numbersToChoose.setFont(numFont);
+	numbersToChoose.setCharacterSize(board.getWindowHeight() / 12);
+	numbersToChoose.setStyle(sf::Text::Regular);
+	numbersToChoose.setFillColor(sf::Color(86, 86, 86));
 }
 
 void BoardView::changeFieldColour(int y, int x, bool tmp)
@@ -93,13 +106,19 @@ void BoardView::draw(sf::RenderWindow & win)
 {
 	win.draw(background);
 	win.draw(field);
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 20; ++i)
 	{
 		win.draw(verticalLines[i]);
 	}
-	for (int j = 0; j < 10; ++j)
+	for (int j = 0; j < 12; ++j)
 	{
 		win.draw(horizontalLines[j]); 
+	}
+	for (int n = 1; n <= 9; ++n)
+	{
+		numbersToChoose.setPosition(board.getWindowWidth() / 6.8 + (n-1) * board.getWindowWidth() / 12, board.getWindowHeight() / 10 - board.getWindowHeight() / 60);
+		numbersToChoose.setString(std::to_string(n));
+		win.draw(numbersToChoose);
 	}
 	for (int k = 0; k < 9; ++k)
 	{

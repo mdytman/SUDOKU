@@ -16,7 +16,6 @@ void SudokuBoard::resetBoard(int wWidth, int wHeight, GameMode gm)
 	winHeight = wHeight;
 	gameMode = gm;
 	gameState = RUNNING;
-	fillingMode = NORMAL;
 	mistakesAmount = 0;
 	//easy - 38/81
 	//medium -30/81
@@ -36,6 +35,13 @@ void SudokuBoard::resetBoard(int wWidth, int wHeight, GameMode gm)
 		for (int i4 = 0; i4 < 9; ++i4)
 		{
 			board[i3][i4].number = 0;
+		}
+	}
+	for (int i5 = 0; i5 < 9; ++i5)
+	{
+		for (int i6 = 0; i6 < 9; ++i6)
+		{
+			board[i5][i6].newNumber = 0;
 		}
 	}
 
@@ -235,10 +241,6 @@ bool SudokuBoard::isCorrectMove(int y, int x, int n)
 	}
 }
 
-void SudokuBoard::changeFillingMode(FillingMode mode)
-{
-	fillingMode = mode;
-}
 
 int SudokuBoard::getMistakesAmount() const
 {
@@ -281,6 +283,11 @@ char SudokuBoard::getFieldInfo(int x, int y) const
 	if (!board[y][x].isRevealed)
 	{
 		return '_';
-	}
-	
+	}	
+}
+
+char SudokuBoard::getInfoAboutNewNumber(int x, int y) const
+{
+	int tmp = board[y][x].newNumber;
+	return '0' + tmp;
 }

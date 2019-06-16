@@ -7,7 +7,8 @@
 #include "IntroView.h"
 #include "IntroController.h"
 #include "ScoreView.h"
-
+#include "ScoreController.h"
+#include "BoardView.h"
 
 int main()
 {
@@ -19,6 +20,9 @@ int main()
 	IntroController ic(iv, sb);
 
 	ScoreView sv(sb);
+	ScoreController sc(sv);
+
+	BoardView bv(sb);
 
 	unsigned int width;
 	unsigned int height;
@@ -45,8 +49,9 @@ int main()
 
 		w.clear();
 		//iv.draw(w);
-		sv.draw(w);
+		//sv.draw(w);
 		//gm.draw(w);
+		bv.draw(w);
 		
 
 		w.display();

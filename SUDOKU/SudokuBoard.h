@@ -3,12 +3,12 @@
 
 enum GameMode {EASY, MEDIUM, HARD, EXPERT};
 enum GameState {RUNNING, FINISHED_LOSS, FINISHED_WIN};
-enum FillingMode {NORMAL, NOTEMODE};
 
 struct Field
 {
 	bool isRevealed;
 	int number;
+	int newNumber;
 };
 
 struct tempField
@@ -27,7 +27,6 @@ class SudokuBoard
 	Field board[9][9];
 	GameMode gameMode;
 	GameState gameState;
-	FillingMode fillingMode;
 	
 	void fillDiagonalTables(int y, int x);
 	bool checkColumn(int x, int y, int n) const; //true if there is a number in column
@@ -47,9 +46,9 @@ public:
 	int getBoardWidth() const;
 	char fillTheField(int number);
 	bool isCorrectMove(int y, int x, int n);
-	void changeFillingMode(FillingMode mode);
 	int getMistakesAmount() const;
 	GameState getGameState() const;
 	char getFieldInfo(int x, int y) const;
+	char getInfoAboutNewNumber(int x, int y) const;
 };
 

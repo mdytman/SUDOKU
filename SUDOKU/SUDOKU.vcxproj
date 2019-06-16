@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BoardView.h" />
     <ClInclude Include="IntroController.h" />
     <ClInclude Include="IntroView.h" />
     <ClInclude Include="pch.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="SudokuBoard.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BoardView.cpp" />
     <ClCompile Include="IntroController.cpp" />
     <ClCompile Include="IntroView.cpp" />
     <ClCompile Include="pch.cpp">

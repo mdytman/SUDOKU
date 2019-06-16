@@ -95,10 +95,12 @@ void BoardView::changeNumberColour(int y, int x, bool tmp)
 	if (tmp == true)
 	{
 		newNumbers.setFillColor(sf::Color::Red); 
+		newNumbers.setPosition(board.getWindowWidth() / 6.8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y * board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
 	}
 	if (tmp == false)
 	{
 		newNumbers.setFillColor(sf::Color(19, 19, 237));
+		newNumbers.setPosition(board.getWindowWidth() / 6.8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y * board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
 	}
 }
 
@@ -124,17 +126,22 @@ void BoardView::draw(sf::RenderWindow & win)
 	{
 		for (int m = 0; m < 9; ++m)
 		{
-			if (board.getFieldInfo(k, m) >= '1' && board.getFieldInfo(k, m) <= '9')
+			if (board.getFieldInfo(m, k) >= '1' && board.getFieldInfo(m, k) <= '9')
 			{
 				numbers.setPosition(board.getWindowWidth() / 6.8 + m * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + k*board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
-				numbers.setString(board.getFieldInfo(k, m));
+				numbers.setString(board.getFieldInfo(m, k));
 				win.draw(numbers);
-			}
-			if (board.getInfoAboutNewNumber(k, m) >= '1' && board.getInfoAboutNewNumber(k, m) <= '9')
+			}		
+		}
+	}
+	for (int p = 0; p < 9; ++p)
+	{
+		for (int r = 0; r < 9; ++r)
+		{
+			if (board.getInfoAboutNewNumber(r, p) >= '1' && board.getInfoAboutNewNumber(r, p) <= '9')
 			{
-				std::cout << "tu jestem" << std::endl;
-				newNumbers.setPosition(board.getWindowWidth() / 6.8 + m * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + k*board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
-				newNumbers.setString(board.getInfoAboutNewNumber(k, m));
+				std::cout << "newNumbers" << std::endl;
+				newNumbers.setString(board.getInfoAboutNewNumber(r, p));
 				win.draw(newNumbers);
 			}
 		}

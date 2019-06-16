@@ -84,7 +84,7 @@ void SudokuBoard::debug_display() const
 	{
 		for (int i2 = 0; i2 < 9; ++i2)
 		{
-			std::cout << "[" << getFieldInfo(i1, i2) << "]";
+			std::cout << "[" << getFieldInfo(i2, i1) << "]";
 		}
 		std::cout << std::endl;
 	}
@@ -216,20 +216,19 @@ bool SudokuBoard::checkSmallTab(int x, int y, int n) const //x and y must be the
 	return false;
 }
 
-void SudokuBoard::fillTheField(int y, int x, int number)
+void SudokuBoard::fillTheField(int y, int x, int n)
 {
-	board[y][x].newNumber = number;
+	board[y][x].newNumber = n;
 }
 
 bool SudokuBoard::isCorrectMove(int y, int x, int n)
 {
-	if (board[y][x].number == n)
+	if (n == board[y][x].number)
 	{
 		return true;
 	}
 	else
 	{
-		++mistakesAmount;
 		return false;
 	}
 }
@@ -238,6 +237,11 @@ bool SudokuBoard::isCorrectMove(int y, int x, int n)
 int SudokuBoard::getMistakesAmount() const
 {
 	return mistakesAmount;
+}
+
+void SudokuBoard::increaseMistakesAmount()
+{
+	mistakesAmount = mistakesAmount + 1;
 }
 
 GameState SudokuBoard::getGameState() const

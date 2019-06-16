@@ -221,7 +221,7 @@ void SudokuBoard::fillTheField(int y, int x, int n)
 	board[y][x].newNumber = n;
 }
 
-bool SudokuBoard::isCorrectMove(int y, int x, int n)
+bool SudokuBoard::isCorrectMove(int y, int x, int n) const
 {
 	if (n == board[y][x].number)
 	{
@@ -289,4 +289,9 @@ char SudokuBoard::getInfoAboutNewNumber(int x, int y) const
 	{
 		return '0' + tmp;
 	}	
+}
+
+int SudokuBoard::getNumber(int y, int x) const
+{
+	return board[y][x].number;
 }

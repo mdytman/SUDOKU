@@ -10,6 +10,7 @@ void BoardController::handleEvent(sf::Event & event)
 	int n;
 	int k = 0;
 	int m = 0;
+	int p = 0;
 	if (event.type == sf::Event::MouseButtonPressed && board.getGameState() == RUNNING)
 	{
 		if (event.mouseButton.button == sf::Mouse::Left)
@@ -23,32 +24,20 @@ void BoardController::handleEvent(sf::Event & event)
 						view.changeFieldColour(i, j, true);
 						m = i;
 						k = j;
+						std::cout << "m: " << m << " k: " << k << std::endl;
 					}
 				}
 			}
 			for (int p = 0; p < 9; ++p)
 			{
-				std::cout << "p \n";
+				std::cout << "m: " << m << " k: " << k << std::endl; //???????
 				if ((event.mouseButton.x > board.getWindowWidth() / 8 + p * board.getWindowWidth() / 12) && (event.mouseButton.x < board.getWindowWidth() / 8 + p * board.getWindowWidth() / 12 + board.getWindowWidth() / 12) && (event.mouseButton.y > board.getWindowHeight() / 10) && (event.mouseButton.y < board.getWindowHeight() / 10 + board.getWindowHeight() / 12))
 				{
 					std::cout << "mousebutton \n";
-					if (board.isCorrectMove(m, k, p + 1) == true)
-					{
-						std::cout << "dobrze" << std::endl;
-						view.changeNumberColour(k, m, false);
-						board.fillTheField(m, k, p + 1);
-					}
-					if (board.isCorrectMove(m, k, p + 1) == false)
-					{
-						std::cout << "zle" << std::endl;
-						board.increaseMistakesAmount();
-						view.changeNumberColour(k, m, true);
-						board.fillTheField(m, k, p + 1);
-					}						
+					view.fillTheField(m, k, p + 1);
 				}
-									
-				
 			}
+			
 		}		
 	}
 	//if (event.type == sf::Event::KeyPressed)

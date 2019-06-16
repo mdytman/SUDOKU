@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include "SudokuBoard.h"
 
+//
+
 class BoardView
 {
 	SudokuBoard board;
@@ -19,7 +21,8 @@ class BoardView
 public:
 	BoardView(SudokuBoard & b);
 	void changeFieldColour(int y, int x, bool tmp);
-	void changeNumberColour(int y, int x, bool tmp); //if move isnt correct
+	void fillTheField(int y, int x, int n);
+	void changeNumberColour(int y, int x, bool tmp); //if move isnt correct         //delete
 	void draw(sf::RenderWindow &win);
 };
 

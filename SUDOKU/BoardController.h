@@ -7,6 +7,8 @@
 class BoardController
 {
 	bool finished = false;
+	int k;
+	int m;
 	BoardView & view;
 	SudokuBoard & board;
 

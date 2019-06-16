@@ -3,14 +3,12 @@
 
 BoardController::BoardController(BoardView & v, SudokuBoard & b) : view(v), board(b)
 {
+	k = 0;
+	m = 0;
 }
 
 void BoardController::handleEvent(sf::Event & event)
 {
-	int n;
-	int k = 0;
-	int m = 0;
-	int p = 0;
 	if (event.type == sf::Event::MouseButtonPressed && board.getGameState() == RUNNING)
 	{
 		if (event.mouseButton.button == sf::Mouse::Left)
@@ -24,7 +22,7 @@ void BoardController::handleEvent(sf::Event & event)
 						view.changeFieldColour(i, j, true);
 						m = i;
 						k = j;
-						std::cout << "m: " << m << " k: " << k << std::endl;
+						//std::cout << "m: " << m << " k: " << k << std::endl;
 					}
 				}
 			}

@@ -50,13 +50,9 @@ BoardView::BoardView(SudokuBoard & b) : board(b)
 
 	newNumbers.setFont(numFont);
 	newNumbers.setCharacterSize(board.getWindowHeight() / 35);
-	newNumbers.setFillColor(sf::Color::Black);
+	//newNumbers.setFillColor(sf::Color::Black);
+	newNumbers.setFillColor(sf::Color(19, 19, 237));
 
-	if (!mistakesFont.loadFromFile("mistakes.ttf"))
-	{
-		std::cout << "error " << std::endl;
-		system("pause");
-	}
 	mistakesAmount.setFont(numFont);
 	mistakesAmount.setCharacterSize(30);
 	mistakesAmount.setStyle(sf::Text::Regular);
@@ -72,12 +68,12 @@ void BoardView::changeFieldColour(int y, int x, bool tmp)
 	if (tmp == false)
 	{
 		field.setFillColor(sf::Color(171, 171, 171));
-		field.setPosition(board.getWindowWidth() / 6.8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y * board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
+		field.setPosition(board.getWindowWidth() / 8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5);
 	}
 	if (tmp == true)
 	{
 		field.setFillColor(sf::Color(132, 186, 220));
-		field.setPosition(board.getWindowWidth() / 6.8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y*board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
+		field.setPosition(board.getWindowWidth() / 8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y * board.getWindowHeight() / 12);
 	}	
 }
 
@@ -85,7 +81,7 @@ void BoardView::changeNumberColour(int y, int x, bool tmp)
 {
 	if (tmp == true)
 	{
-		newNumbers.setFillColor(sf::Color::Red); //setPosition!!!!!!!!!!
+		newNumbers.setFillColor(sf::Color::Red); 
 	}
 	if (tmp == false)
 	{
@@ -117,6 +113,7 @@ void BoardView::draw(sf::RenderWindow & win)
 			}
 			if (board.getInfoAboutNewNumber(k, m) >= '1' && board.getInfoAboutNewNumber(k, m) <= '9')
 			{
+				std::cout << "tu jestem" << std::endl;
 				newNumbers.setPosition(board.getWindowWidth() / 6.8 + m * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + k*board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
 				newNumbers.setString(board.getInfoAboutNewNumber(k, m));
 				win.draw(newNumbers);

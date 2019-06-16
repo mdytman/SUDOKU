@@ -9,6 +9,7 @@
 #include "ScoreView.h"
 #include "ScoreController.h"
 #include "BoardView.h"
+#include "BoardController.h"
 
 int main()
 {
@@ -23,6 +24,7 @@ int main()
 	ScoreController sc(sv);
 
 	BoardView bv(sb);
+	BoardController bc(bv, sb);
 
 	unsigned int width;
 	unsigned int height;
@@ -43,6 +45,7 @@ int main()
 			if (event.type == sf::Event::Closed)
 				w.close();
 			//ic.handleEvent(event);
+			bc.handleEvent(event);
 			//gm.handleEvent(event);
 		}
 

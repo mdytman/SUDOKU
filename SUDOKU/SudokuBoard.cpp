@@ -216,16 +216,9 @@ bool SudokuBoard::checkSmallTab(int x, int y, int n) const //x and y must be the
 	return false;
 }
 
-char SudokuBoard::fillTheField(int number)
+void SudokuBoard::fillTheField(int y, int x, int number)
 {
-	if (number < 1 || number > 9)
-	{
-		return '_';
-	}
-	if (number >= 1 && number <= 9)
-	{
-		return '0' + number;
-	}
+	board[y][x].newNumber = number;
 }
 
 bool SudokuBoard::isCorrectMove(int y, int x, int n)
@@ -289,5 +282,7 @@ char SudokuBoard::getFieldInfo(int x, int y) const
 char SudokuBoard::getInfoAboutNewNumber(int x, int y) const
 {
 	int tmp = board[y][x].newNumber;
-	return '0' + tmp;
+	{
+		return '0' + tmp;
+	}	
 }

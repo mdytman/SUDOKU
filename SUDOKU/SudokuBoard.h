@@ -44,7 +44,7 @@ public:
 	int getWindowWidth() const;
 	int getBoardHeight() const;
 	int getBoardWidth() const;
-	char fillTheField(int number);
+	void fillTheField(int y, int x, int number);
 	bool isCorrectMove(int y, int x, int n);
 	int getMistakesAmount() const;
 	GameState getGameState() const;

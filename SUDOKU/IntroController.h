@@ -6,6 +6,7 @@
 class IntroController
 {
 	bool finished = false;
+	int tmp;
 	IntroView & view;
 	SudokuBoard & board;
 	GameMode gMode;

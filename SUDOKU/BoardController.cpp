@@ -38,6 +38,10 @@ void BoardController::handleEvent(sf::Event & event)
 			
 		}		
 	}
+	if (board.getGameState() != RUNNING)
+	{
+		finished = true;
+	}
 	//if (event.type == sf::Event::KeyPressed)
 	//{
 	//	for (int i1 = 1; i1 <= 9; ++i1)

@@ -58,17 +58,17 @@ BoardView::BoardView(SudokuBoard & b) : board(b)
 	numbers.setStyle(sf::Text::Regular);
 	numbers.setFillColor(sf::Color::Black);
 
-	newNumbers.setFont(numFont);
-	newNumbers.setCharacterSize(board.getWindowHeight() / 12);
-	//newNumbers.setFillColor(sf::Color::Black);
-	newNumbers.setFillColor(sf::Color(19, 19, 237));
+	//newNumbers.setFont(numFont);
+	//newNumbers.setCharacterSize(board.getWindowHeight() / 12);
+	////newNumbers.setFillColor(sf::Color::Black);
+	//newNumbers.setFillColor(sf::Color(19, 19, 237));
 
 	mistakesAmount.setFont(numFont);
 	mistakesAmount.setCharacterSize(30);
 	mistakesAmount.setStyle(sf::Text::Regular);
 	mistakesAmount.setFillColor(sf::Color::Black);
 	mistakesAmount.setPosition(board.getWindowWidth() / 3, board.getWindowHeight() / 20);
-	mistakesAmount.setString("Mistakes amount: " + std::to_string(board.getMistakesAmount()) + "/3");
+	
 
 	numbersToChoose.setFont(numFont);
 	numbersToChoose.setCharacterSize(board.getWindowHeight() / 12);
@@ -92,24 +92,36 @@ void BoardView::changeFieldColour(int y, int x, bool tmp)
 
 void BoardView::fillTheField(int y, int x, int n)
 {
-	if (n == board.getNumber(y, x))
+	if (board.getFieldInfo(x, y) == '_')
 	{
-		newNumbers.setFillColor(sf::Color(19, 19, 237));
-		newNumbers.setPosition(board.getWindowWidth() / 6.8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y * board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
-		newNumbers.setString(std::to_string(n));
+		if (n == board.getNumber(y, x))
+		{
+			sf::Text newNumbers;
+			newNumbers.setFont(numFont);
+			newNumbers.setCharacterSize(board.getWindowHeight() / 12);
+			newNumbers.setFillColor(sf::Color(19, 19, 237));
+			newNumbers.setPosition(board.getWindowWidth() / 6.8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y * board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
+			newNumbers.setString(std::to_string(n));
+			nNumbers.push_back(newNumbers);
+		}
+		if (n != board.getNumber(y, x))
+		{
+			sf::Text newNumbers;
+			board.increaseMistakesAmount();
+			newNumbers.setFont(numFont);
+			newNumbers.setCharacterSize(board.getWindowHeight() / 12);
+			newNumbers.setFillColor(sf::Color(234, 68, 68));
+			newNumbers.setPosition(board.getWindowWidth() / 6.8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y * board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
+			newNumbers.setString(std::to_string(n));
+			nNumbers.push_back(newNumbers);
+		}
 	}
-	if (n != board.getNumber(y, x))
-	{
-		board.increaseMistakesAmount();
-		newNumbers.setFillColor(sf::Color::Red);
-		newNumbers.setPosition(board.getWindowWidth() / 6.8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y * board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
-		newNumbers.setString(std::to_string(n));
-	}
+	
 }
 
 void BoardView::changeNumberColour(int y, int x, bool tmp)
 {
-	if (tmp == true)
+	/*if (tmp == true)
 	{
 		newNumbers.setFillColor(sf::Color::Red); 
 		newNumbers.setPosition(board.getWindowWidth() / 6.8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y * board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
@@ -118,7 +130,7 @@ void BoardView::changeNumberColour(int y, int x, bool tmp)
 	{
 		newNumbers.setFillColor(sf::Color(19, 19, 237));
 		newNumbers.setPosition(board.getWindowWidth() / 6.8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y * board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
-	}
+	}*/
 }
 
 void BoardView::draw(sf::RenderWindow & win)
@@ -151,6 +163,10 @@ void BoardView::draw(sf::RenderWindow & win)
 			}		
 		}
 	}
-	win.draw(newNumbers);
+	for (size_t p = 0; p < nNumbers.size(); ++p)
+	{
+		win.draw(nNumbers[p]);
+	}
+	mistakesAmount.setString("Mistakes amount: " + std::to_string(board.getMistakesAmount()) + "/3");
 	win.draw(mistakesAmount);
 }

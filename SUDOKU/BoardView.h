@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <vector>
 #include <SFML/Graphics.hpp>
 #include "SudokuBoard.h"
 
@@ -13,7 +14,7 @@ class BoardView
 	sf::RectangleShape verticalLines[20];
 	sf::RectangleShape horizontalLines[12];
 	sf::Text numbers;
-	sf::Text newNumbers;
+	std::vector<sf::Text> nNumbers;
 	sf::Text numbersToChoose;
 	sf::Text mistakesAmount;
 	sf::Font numFont;

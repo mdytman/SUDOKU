@@ -10,6 +10,7 @@
 #include "ScoreController.h"
 #include "BoardView.h"
 #include "BoardController.h"
+#include "GameManager.h"
 
 int main()
 {
@@ -25,6 +26,8 @@ int main()
 
 	BoardView bv(sb);
 	BoardController bc(bv, sb);
+
+	GameManager gm(ic, bc, sc);
 
 	unsigned int width;
 	unsigned int height;
@@ -45,16 +48,16 @@ int main()
 			if (event.type == sf::Event::Closed)
 				w.close();
 			//ic.handleEvent(event);
-			bc.handleEvent(event);
-			//gm.handleEvent(event);
+			//bc.handleEvent(event);
+			gm.handleEvent(event);
 		}
 
 
 		w.clear();
 		//iv.draw(w);
 		//sv.draw(w);
-		//gm.draw(w);
-		bv.draw(w);
+		gm.draw(w);
+		//bv.draw(w);
 		
 
 		w.display();

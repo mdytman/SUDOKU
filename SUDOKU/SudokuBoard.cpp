@@ -17,6 +17,7 @@ void SudokuBoard::resetBoard(int wWidth, int wHeight, GameMode gm)
 	gameMode = gm;
 	gameState = RUNNING;
 	mistakesAmount = 0;
+	filledFields = 0;
 	//easy - 38/81
 	//medium -30/81
 	//hard - 28/81
@@ -56,21 +57,25 @@ void SudokuBoard::resetBoard(int wWidth, int wHeight, GameMode gm)
 	case EASY:
 
 		revealFields(38);
+		fieldsToFill = 44;
 		break;
 
 	case MEDIUM:
 
 		revealFields(30);
+		fieldsToFill = 52;
 		break;
 
 	case HARD:
 
 		revealFields(28);
+		fieldsToFill = 54;
 		break;
 
 	case EXPERT:
 
 		revealFields(23);
+		fieldsToFill = 59;
 		break;
 
 	default:
@@ -187,6 +192,11 @@ int SudokuBoard::getBoardWidth() const
 	return width;
 }
 
+void SudokuBoard::increaseFilledFieldsAmount()
+{
+	filledFields = filledFields + 1;
+}
+
 bool SudokuBoard::checkColumn(int x, int y, int n) const
 {
 	for (int i = 0; i < 9; i++)
@@ -216,22 +226,22 @@ bool SudokuBoard::checkSmallTab(int x, int y, int n) const //x and y must be the
 	return false;
 }
 
-void SudokuBoard::fillTheField(int y, int x, int n)
-{
-	board[y][x].newNumber = n;
-}
-
-bool SudokuBoard::isCorrectMove(int y, int x, int n) const
-{
-	if (n == board[y][x].number)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
+//void SudokuBoard::fillTheField(int y, int x, int n)
+//{
+//	board[y][x].newNumber = n;
+//}
+//
+//bool SudokuBoard::isCorrectMove(int y, int x, int n) const
+//{
+//	if (n == board[y][x].number)
+//	{
+//		return true;
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//}
 
 
 int SudokuBoard::getMistakesAmount() const
@@ -250,19 +260,7 @@ GameState SudokuBoard::getGameState() const
 	{
 		return FINISHED_LOSS;
 	}
-	
-	int tmp = 0;
-	for (int i = 0; i < 9; ++i)
-	{
-		for (int j = 0; j < 9; ++j)
-		{
-			if (board[i][j].isRevealed)
-			{
-				++tmp;
-			}
-		}
-	}
-	if (mistakesAmount <= 2 && tmp == 81) //it could be problem here
+	if (mistakesAmount <= 2 && filledFields == fieldsToFill) 
 	{
 		return FINISHED_WIN;
 	}
@@ -283,13 +281,13 @@ char SudokuBoard::getFieldInfo(int x, int y) const
 	}	
 }
 
-char SudokuBoard::getInfoAboutNewNumber(int x, int y) const
-{
-	int tmp = board[y][x].newNumber;
-	{
-		return '0' + tmp;
-	}	
-}
+//char SudokuBoard::getInfoAboutNewNumber(int x, int y) const
+//{
+//	int tmp = board[y][x].newNumber;
+//	{
+//		return '0' + tmp;
+//	}	
+//}
 
 int SudokuBoard::getNumber(int y, int x) const
 {

@@ -16,7 +16,7 @@ int main()
 {
 	srand(time(NULL));
 	SudokuBoard sb(900, 900, EASY);
-	sb.debug_display();
+	sb.debug_display(); //
 
 	IntroView iv(sb);
 	IntroController ic(iv, sb);
@@ -47,19 +47,14 @@ int main()
 
 			if (event.type == sf::Event::Closed)
 				w.close();
-			//ic.handleEvent(event);
-			//bc.handleEvent(event);
 			gm.handleEvent(event);
 		}
 
 
 		w.clear();
-		//iv.draw(w);
-		//sv.draw(w);
-		gm.draw(w);
-		//bv.draw(w);
-		
 
+		gm.draw(w);
+		
 		w.display();
 	}
 

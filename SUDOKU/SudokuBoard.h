@@ -8,7 +8,6 @@ struct Field
 {
 	bool isRevealed;
 	int number;
-	int newNumber;
 };
 
 struct tempField
@@ -40,20 +39,17 @@ class SudokuBoard
 	void revealFields(int amount);
 public:
 	SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode);
-	void resetBoard(int wWidth, int wHeight, GameMode gm);
+	void resetBoard(GameMode gm);
 	void debug_display() const;
 	int getWindowHeight() const;
 	int getWindowWidth() const;
 	int getBoardHeight() const;
 	int getBoardWidth() const;
 	void increaseFilledFieldsAmount();
-	//void fillTheField(int y, int x, int n); //
-	//bool isCorrectMove(int y, int x, int n) const;
 	int getMistakesAmount() const;
 	void increaseMistakesAmount();
 	GameState getGameState() const;
 	char getFieldInfo(int x, int y) const;
-	//char getInfoAboutNewNumber(int x, int y) const; //
 	int getNumber(int y, int x) const;
 };
 

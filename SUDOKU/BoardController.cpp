@@ -22,13 +22,12 @@ void BoardController::handleEvent(sf::Event & event)
 						view.changeFieldColour(i, j, true);
 						m = i;
 						k = j;
-						//std::cout << "m: " << m << " k: " << k << std::endl;
 					}
 				}
 			}
 			for (int p = 0; p < 9; ++p)
 			{
-				std::cout << "m: " << m << " k: " << k << std::endl; //???????
+				std::cout << "m: " << m << " k: " << k << std::endl; 
 				if ((event.mouseButton.x > board.getWindowWidth() / 8 + p * board.getWindowWidth() / 12) && (event.mouseButton.x < board.getWindowWidth() / 8 + p * board.getWindowWidth() / 12 + board.getWindowWidth() / 12) && (event.mouseButton.y > board.getWindowHeight() / 10) && (event.mouseButton.y < board.getWindowHeight() / 10 + board.getWindowHeight() / 12))
 				{
 					std::cout << "mousebutton \n";
@@ -40,31 +39,8 @@ void BoardController::handleEvent(sf::Event & event)
 	}
 	if (board.getGameState() != RUNNING)
 	{
+		std::cout << "finished \n";
 		finished = true;
 	}
-	//if (event.type == sf::Event::KeyPressed)
-	//{
-	//	for (int i1 = 1; i1 <= 9; ++i1)
-	//	{
-	//		if (event.key.code == sf::Keyboard::Num0 + i1)
-	//		{
-	//			std::cout << "num0" << std::endl;
-	//			if (board.isCorrectMove(k, m, i1))
-	//			{
-	//				std::cout << "dobrze" << std::endl;
-	//				view.changeNumberColour(k, m, false);
-	//				board.fillTheField(k, m, i1);
-	//			}
-	//			if (board.isCorrectMove(k, m, i1))
-	//			{
-	//				std::cout << "zle" << std::endl;
-	//				view.changeNumberColour(k, m, true);
-	//				board.fillTheField(k, m, i1);
-	//			}
-	//		}
-	//	}
-	//}
-	/*std::cin >> n;
-	*/
 }
 

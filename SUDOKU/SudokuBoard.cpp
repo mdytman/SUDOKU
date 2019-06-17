@@ -5,54 +5,22 @@
 #include <algorithm>
 #include <iterator>
 
-SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
+SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode) : winWidth(windowWidth), winHeight(windowHeight), gameMode(gamemode)
 {
-	resetBoard(windowWidth, windowHeight, gamemode);
+	
+	resetBoard(gameMode);
+
+
 }
 
-void SudokuBoard::resetBoard(int wWidth, int wHeight, GameMode gm)
+void SudokuBoard::resetBoard(GameMode gm)
 {
-	winWidth = wWidth;
-	winHeight = wHeight;
 	gameMode = gm;
 	gameState = RUNNING;
 	mistakesAmount = 0;
 	filledFields = 0;
-	//easy - 38/81
-	//medium -30/81
-	//hard - 28/81
-	//expert - 23/81
-
-	for (int i1 = 0; i1 < 9; ++i1)
-	{
-		for (int i2 = 0; i2 < 9; ++i2)
-		{
-			board[i1][i2].isRevealed = false;
-		}
-
-	}
-	for (int i3 = 0; i3 < 9; ++i3)
-	{
-		for (int i4 = 0; i4 < 9; ++i4)
-		{
-			board[i3][i4].number = 0;
-		}
-	}
-	for (int i5 = 0; i5 < 9; ++i5)
-	{
-		for (int i6 = 0; i6 < 9; ++i6)
-		{
-			board[i5][i6].newNumber = 0;
-		}
-	}
-
-	fillDiagonalTables(0, 0);
-	fillDiagonalTables(3, 3);
-	fillDiagonalTables(6, 6);
-
-	setNumbers();
-
-	switch (gameMode)
+	
+	switch (gm)
 	{
 	case EASY:
 
@@ -61,7 +29,7 @@ void SudokuBoard::resetBoard(int wWidth, int wHeight, GameMode gm)
 		break;
 
 	case MEDIUM:
-
+		std::cout << "medium\n";
 		revealFields(30);
 		fieldsToFill = 52;
 		break;
@@ -81,6 +49,7 @@ void SudokuBoard::resetBoard(int wWidth, int wHeight, GameMode gm)
 	default:
 		break;
 	}
+
 }
 
 void SudokuBoard::debug_display() const
@@ -101,11 +70,11 @@ bool SudokuBoard::setNumbers() //inspired by https://www.geeksforgeeks.org/sudok
 
 	if (!isEmpty(y, x))
 	{
-		return true; 
+		return true;
 	}
-		
-	for (int n = 1; n <= 9; ++n) 
-	{ 
+
+	for (int n = 1; n <= 9; ++n)
+	{
 		if (!checkAll(y, x, n))
 		{
 			board[y][x].number = n;
@@ -116,7 +85,7 @@ bool SudokuBoard::setNumbers() //inspired by https://www.geeksforgeeks.org/sudok
 			board[y][x].number = 0;
 		}
 	}
-	return false; 
+	return false;
 }
 
 void SudokuBoard::revealFields(int amount)
@@ -124,6 +93,7 @@ void SudokuBoard::revealFields(int amount)
 	int x, y;
 	for (int i = 0; i < amount; ++i)
 	{
+		std::cout << "revealFields \n";
 		do
 		{
 			x = rand() % 9;
@@ -167,7 +137,7 @@ bool SudokuBoard::isEmpty(int &y, int &x) const
 			if (board[y][x].number == 0)
 				return true;
 		}
-	}		
+	}
 	return false;
 }
 
@@ -211,8 +181,8 @@ bool SudokuBoard::checkRow(int x, int y, int n) const
 {
 	for (int i = 0; i < 9; ++i)
 	{
-			if (board[i][x].number == n)
-				return true;
+		if (board[i][x].number == n)
+			return true;
 	}
 	return false;
 }
@@ -225,23 +195,6 @@ bool SudokuBoard::checkSmallTab(int x, int y, int n) const //x and y must be the
 				return true;
 	return false;
 }
-
-//void SudokuBoard::fillTheField(int y, int x, int n)
-//{
-//	board[y][x].newNumber = n;
-//}
-//
-//bool SudokuBoard::isCorrectMove(int y, int x, int n) const
-//{
-//	if (n == board[y][x].number)
-//	{
-//		return true;
-//	}
-//	else
-//	{
-//		return false;
-//	}
-//}
 
 
 int SudokuBoard::getMistakesAmount() const
@@ -256,12 +209,18 @@ void SudokuBoard::increaseMistakesAmount()
 
 GameState SudokuBoard::getGameState() const
 {
+	std::cout << "finished \n";
+
 	if (mistakesAmount > 2)
 	{
+		std::cout << "finished \n";
+
 		return FINISHED_LOSS;
 	}
-	if (mistakesAmount <= 2 && filledFields == fieldsToFill) 
+	if (mistakesAmount <= 2 && filledFields == fieldsToFill)
 	{
+		std::cout << "finished \n";
+
 		return FINISHED_WIN;
 	}
 	else return gameState;
@@ -278,16 +237,8 @@ char SudokuBoard::getFieldInfo(int x, int y) const
 	if (!board[y][x].isRevealed)
 	{
 		return '_';
-	}	
+	}
 }
-
-//char SudokuBoard::getInfoAboutNewNumber(int x, int y) const
-//{
-//	int tmp = board[y][x].newNumber;
-//	{
-//		return '0' + tmp;
-//	}	
-//}
 
 int SudokuBoard::getNumber(int y, int x) const
 {

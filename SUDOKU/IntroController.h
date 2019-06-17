@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "SudokuBoard.h"
 #include "IntroView.h"
@@ -6,7 +7,6 @@
 class IntroController
 {
 	bool finished = false;
-	int tmp;
 	IntroView & view;
 	SudokuBoard & board;
 	GameMode gMode;

@@ -55,7 +55,7 @@ void IntroController::handleEvent(sf::Event & event)
 			}
 			if ((event.mouseButton.x > board.getWindowWidth() / 2) && (event.mouseButton.x < board.getWindowWidth() / 2 + board.getWindowWidth() / 3) && (event.mouseButton.y > board.getWindowHeight() / 1.5) && (event.mouseButton.y < board.getWindowHeight() / 1.5 + board.getWindowHeight() / 14))
 			{
-				board.resetBoard(board.getWindowWidth(), board.getWindowHeight(), getGMode());
+				board.resetBoard(getGMode());
 				finished = true;
 			}
 		}
@@ -64,5 +64,6 @@ void IntroController::handleEvent(sf::Event & event)
 
 GameMode IntroController::getGMode() const
 {
+	std::cout << "getgmode\n";
 	return gMode;
 }

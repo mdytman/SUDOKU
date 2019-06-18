@@ -16,7 +16,7 @@ int main()
 {
 	srand(time(NULL));
 	SudokuBoard sb(900, 900, EASY);
-	sb.debug_display();
+	sb.debug_display(); //
 
 	IntroView iv(sb);
 	IntroController ic(iv, sb);

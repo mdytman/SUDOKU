@@ -14,17 +14,9 @@ ScoreView::ScoreView(SudokuBoard & b) : board(b)
 
 	gameResult.setFont(gameResultFont);
 	gameResult.setCharacterSize(board.getWindowHeight() / 5);
-	gameResult.setPosition(board.getWindowWidth() / 7.1, board.getWindowHeight() / 8);
+	gameResult.setPosition(board.getWindowWidth() / 6.8, board.getWindowHeight() / 8);
 	gameResult.setFillColor(sf::Color::Black);
-
-	if (board.getGameState() == FINISHED_WIN)
-	{
-		gameResult.setString("YOU WON");
-	}
-	if (board.getGameState() == FINISHED_LOSS)
-	{
-		gameResult.setString("YOU LOST");
-	}
+	gameResult.setString("THE END");
 
 	if (!pressSpaceFont.loadFromFile("courier-new.ttf"))
 	{

@@ -5,23 +5,14 @@
 #include <algorithm>
 #include <iterator>
 
-SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode)
-{
-	resetBoard(windowWidth, windowHeight, gamemode);
-}
+int SudokuBoard::mistakesCounter = 0;
+int SudokuBoard::filledFieldsCounter = 0;
 
-void SudokuBoard::resetBoard(int wWidth, int wHeight, GameMode gm)
+SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode) : winWidth(windowWidth), winHeight(windowHeight), gameMode(gamemode)
 {
-	winWidth = wWidth;
-	winHeight = wHeight;
-	gameMode = gm;
 	gameState = RUNNING;
 	mistakesAmount = 0;
 	filledFields = 0;
-	//easy - 38/81
-	//medium -30/81
-	//hard - 28/81
-	//expert - 23/81
 
 	for (int i1 = 0; i1 < 9; ++i1)
 	{
@@ -38,44 +29,42 @@ void SudokuBoard::resetBoard(int wWidth, int wHeight, GameMode gm)
 			board[i3][i4].number = 0;
 		}
 	}
-	for (int i5 = 0; i5 < 9; ++i5)
-	{
-		for (int i6 = 0; i6 < 9; ++i6)
-		{
-			board[i5][i6].newNumber = 0;
-		}
-	}
+
 
 	fillDiagonalTables(0, 0);
 	fillDiagonalTables(3, 3);
 	fillDiagonalTables(6, 6);
 
 	setNumbers();
+	resetBoard(winWidth, winHeight, gameMode);
+}
 
+void SudokuBoard::resetBoard(int wWidth, int wHeight, GameMode gm)
+{
 	switch (gameMode)
 	{
 	case EASY:
 
 		revealFields(38);
-		fieldsToFill = 44;
+		fieldsToFill = 43;
 		break;
 
 	case MEDIUM:
 
 		revealFields(30);
-		fieldsToFill = 52;
+		fieldsToFill = 51;
 		break;
 
 	case HARD:
 
 		revealFields(28);
-		fieldsToFill = 54;
+		fieldsToFill = 53;
 		break;
 
 	case EXPERT:
-
+		std::cout << "expert \n";
 		revealFields(23);
-		fieldsToFill = 59;
+		fieldsToFill = 58;
 		break;
 
 	default:
@@ -192,6 +181,18 @@ int SudokuBoard::getBoardWidth() const
 	return width;
 }
 
+int SudokuBoard::countMistakes()
+{
+	mistakesCounter++;
+	return mistakesCounter;
+}
+
+int SudokuBoard::countFilledFields()
+{
+	filledFieldsCounter++;
+	return filledFieldsCounter;
+}
+
 void SudokuBoard::increaseFilledFieldsAmount()
 {
 	filledFields = filledFields + 1;
@@ -226,24 +227,6 @@ bool SudokuBoard::checkSmallTab(int x, int y, int n) const //x and y must be the
 	return false;
 }
 
-//void SudokuBoard::fillTheField(int y, int x, int n)
-//{
-//	board[y][x].newNumber = n;
-//}
-//
-//bool SudokuBoard::isCorrectMove(int y, int x, int n) const
-//{
-//	if (n == board[y][x].number)
-//	{
-//		return true;
-//	}
-//	else
-//	{
-//		return false;
-//	}
-//}
-
-
 int SudokuBoard::getMistakesAmount() const
 {
 	return mistakesAmount;
@@ -256,11 +239,11 @@ void SudokuBoard::increaseMistakesAmount()
 
 GameState SudokuBoard::getGameState() const
 {
-	if (mistakesAmount > 2)
+	if (mistakesCounter > 2)
 	{
 		return FINISHED_LOSS;
 	}
-	if (mistakesAmount <= 2 && filledFields == fieldsToFill) 
+	if (mistakesCounter <= 2 && filledFieldsCounter == fieldsToFill) 
 	{
 		return FINISHED_WIN;
 	}
@@ -280,14 +263,6 @@ char SudokuBoard::getFieldInfo(int x, int y) const
 		return '_';
 	}	
 }
-
-//char SudokuBoard::getInfoAboutNewNumber(int x, int y) const
-//{
-//	int tmp = board[y][x].newNumber;
-//	{
-//		return '0' + tmp;
-//	}	
-//}
 
 int SudokuBoard::getNumber(int y, int x) const
 {

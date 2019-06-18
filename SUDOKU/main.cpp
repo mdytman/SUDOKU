@@ -47,19 +47,14 @@ int main()
 
 			if (event.type == sf::Event::Closed)
 				w.close();
-			//ic.handleEvent(event);
-			//bc.handleEvent(event);
 			gm.handleEvent(event);
 		}
 
 
 		w.clear();
-		//iv.draw(w);
-		//sv.draw(w);
-		gm.draw(w);
-		//bv.draw(w);
-		
 
+		gm.draw(w);
+		
 		w.display();
 	}
 

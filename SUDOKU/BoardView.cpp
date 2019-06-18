@@ -58,11 +58,6 @@ BoardView::BoardView(SudokuBoard & b) : board(b)
 	numbers.setStyle(sf::Text::Regular);
 	numbers.setFillColor(sf::Color::Black);
 
-	//newNumbers.setFont(numFont);
-	//newNumbers.setCharacterSize(board.getWindowHeight() / 12);
-	////newNumbers.setFillColor(sf::Color::Black);
-	//newNumbers.setFillColor(sf::Color(19, 19, 237));
-
 	mistakesAmount.setFont(numFont);
 	mistakesAmount.setCharacterSize(30);
 	mistakesAmount.setStyle(sf::Text::Regular);
@@ -103,35 +98,40 @@ void BoardView::fillTheField(int y, int x, int n)
 			newNumbers.setPosition(board.getWindowWidth() / 6.8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y * board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
 			newNumbers.setString(std::to_string(n));
 			nNumbers.push_back(newNumbers);
+			
 		}
 		if (n != board.getNumber(y, x))
 		{
 			sf::Text newNumbers;
-			board.increaseMistakesAmount();
+			board.increaseMistakesAmount(); 
 			newNumbers.setFont(numFont);
 			newNumbers.setCharacterSize(board.getWindowHeight() / 12);
 			newNumbers.setFillColor(sf::Color(234, 68, 68));
 			newNumbers.setPosition(board.getWindowWidth() / 6.8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y * board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
 			newNumbers.setString(std::to_string(n));
 			nNumbers.push_back(newNumbers);
+		
 		}
-	}
-	
+	}	
 }
 
-void BoardView::changeNumberColour(int y, int x, bool tmp)
+bool BoardView::isCorrectMove(int y, int x, int n)
 {
-	/*if (tmp == true)
+	if (board.getFieldInfo(x, y) == '_')
 	{
-		newNumbers.setFillColor(sf::Color::Red); 
-		newNumbers.setPosition(board.getWindowWidth() / 6.8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y * board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
+		if (n == board.getNumber(y, x))
+		{
+			return true;
+
+		}
+		if (n != board.getNumber(y, x))
+		{
+			return false;
+
+		}
 	}
-	if (tmp == false)
-	{
-		newNumbers.setFillColor(sf::Color(19, 19, 237));
-		newNumbers.setPosition(board.getWindowWidth() / 6.8 + x * board.getWindowWidth() / 12, board.getWindowHeight() / 5 + y * board.getWindowHeight() / 12 - board.getWindowHeight() / 60);
-	}*/
 }
+
 
 void BoardView::draw(sf::RenderWindow & win)
 {
@@ -169,4 +169,9 @@ void BoardView::draw(sf::RenderWindow & win)
 	}
 	mistakesAmount.setString("Mistakes amount: " + std::to_string(board.getMistakesAmount()) + "/3");
 	win.draw(mistakesAmount);
+}
+
+int BoardView::getMistakesFromView()
+{
+	return board.getMistakesAmount();
 }

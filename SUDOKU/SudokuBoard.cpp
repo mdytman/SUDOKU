@@ -41,6 +41,18 @@ SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode) :
 
 void SudokuBoard::resetBoard(int wWidth, int wHeight, GameMode gm)
 {
+	winWidth = wWidth;
+	winHeight = wHeight;
+	gameMode = gm;
+
+	for (int i1 = 0; i1 < 9; ++i1)
+	{
+		for (int i2 = 0; i2 < 9; ++i2)
+		{
+			board[i1][i2].isRevealed = false;
+		}
+
+	}
 	switch (gameMode)
 	{
 	case EASY:

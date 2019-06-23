@@ -1,4 +1,4 @@
-//#include "pch.h"
+#include "pch.h"
 #include "ScoreView.h"
 
 ScoreView::ScoreView(SudokuBoard & b) : board(b)

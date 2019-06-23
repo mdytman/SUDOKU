@@ -24,8 +24,6 @@ class SudokuBoard
 	int height;
 	int width;
 	int mistakesAmount;
-	static int mistakesCounter;
-	static int filledFieldsCounter;
 	int fieldsToFill;
 	int filledFields;
 	Field board[9][9];
@@ -39,17 +37,16 @@ class SudokuBoard
 	bool checkAll(int y, int x, int n); //false if number 'n' is not in the column, row and small tab
 	bool isEmpty(int &y, int &x) const; //that method is looking for a field with no number on it
 	bool setNumbers();
-	void revealFields(int amount);
 public:
 	SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode);
+	void revealFields(int amount);
+	void coverFields();
 	void resetBoard(int wWidth, int wHeight, GameMode gm);
 	void debug_display() const;
 	int getWindowHeight() const;
 	int getWindowWidth() const;
 	int getBoardHeight() const;
 	int getBoardWidth() const;
-	static int countMistakes();
-	static int countFilledFields();
 	void increaseFilledFieldsAmount();
 	int getMistakesAmount() const;
 	void increaseMistakesAmount();

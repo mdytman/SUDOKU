@@ -1,4 +1,4 @@
-//#include "pch.h"
+#include "pch.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -16,7 +16,6 @@ int main()
 {
 	srand(time(NULL));
 	SudokuBoard sb(900, 900, EASY);
-	sb.debug_display(); //
 
 	IntroView iv(sb);
 	IntroController ic(iv, sb);

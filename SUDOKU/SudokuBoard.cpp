@@ -1,12 +1,10 @@
-//#include "pch.h"
+#include "pch.h"
 #include "SudokuBoard.h"
 #include <vector>
 #include <iostream>
 #include <algorithm>
 #include <iterator>
 
-int SudokuBoard::mistakesCounter = 0;
-int SudokuBoard::filledFieldsCounter = 0;
 
 SudokuBoard::SudokuBoard(int windowWidth, int windowHeight, GameMode gamemode) : winWidth(windowWidth), winHeight(windowHeight), gameMode(gamemode)
 {
@@ -134,6 +132,17 @@ void SudokuBoard::revealFields(int amount)
 	}
 }
 
+void SudokuBoard::coverFields()
+{
+	for (int i1 = 0; i1 < 9; ++i1)
+	{
+		for (int i2 = 0; i2 < 9; ++i2)
+		{
+			board[i1][i2].isRevealed = false;
+		}
+	}
+}
+
 
 void SudokuBoard::fillDiagonalTables(int y, int x)
 {
@@ -193,18 +202,6 @@ int SudokuBoard::getBoardWidth() const
 	return width;
 }
 
-int SudokuBoard::countMistakes()
-{
-	mistakesCounter++;
-	return mistakesCounter;
-}
-
-int SudokuBoard::countFilledFields()
-{
-	filledFieldsCounter++;
-	return filledFieldsCounter;
-}
-
 void SudokuBoard::increaseFilledFieldsAmount()
 {
 	filledFields = filledFields + 1;
@@ -251,11 +248,11 @@ void SudokuBoard::increaseMistakesAmount()
 
 GameState SudokuBoard::getGameState() const
 {
-	if (mistakesCounter > 2)
+	if (mistakesAmount > 2)
 	{
 		return FINISHED_LOSS;
 	}
-	if (mistakesCounter <= 2 && filledFieldsCounter == fieldsToFill) 
+	if (mistakesAmount <= 2 && filledFields == fieldsToFill) 
 	{
 		return FINISHED_WIN;
 	}

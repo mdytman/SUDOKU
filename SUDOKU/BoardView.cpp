@@ -1,4 +1,4 @@
-//#include "pch.h"
+#include "pch.h"
 #include "BoardView.h"
 
 BoardView::BoardView(SudokuBoard & b) : board(b)

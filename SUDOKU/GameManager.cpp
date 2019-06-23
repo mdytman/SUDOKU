@@ -1,4 +1,4 @@
-#include "pch.h"
+//#include "pch.h"
 #include "GameManager.h"
 
 GameManager::GameManager(IntroController &ic, BoardController &bc, ScoreController &sc)
